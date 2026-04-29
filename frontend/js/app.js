@@ -5,6 +5,7 @@ const inputTitle = document.getElementById("inputTitle");
 const inputCategory = document.getElementById("inputCategory");
 const inputRating = document.getElementById("inputRating");
 const btnAdd = document.getElementById("btnAdd");
+const memesCount = document.getElementById('memesCount');
 
 function renderMemes(memes) {
   loadingText.style.display = "none";
@@ -14,7 +15,9 @@ function renderMemes(memes) {
   }
   memesGrid.innerHTML = memes.map((meme) => createCardHTML(meme)).join("");
 }
-
+function Count(memes) {
+  memesCount.textContent = `Всего мемов: ${memes.length}`;
+}//сколько всего мемов
 function createCardHTML(meme) {
   const date = new Date(meme.addedAt).toLocaleDateString("ru-RU");
   const stars = "⭐".repeat(meme.rating);
@@ -33,6 +36,7 @@ async function loadMemes() {
   try {
     const memes = await getAllMemes();
     renderMemes(memes);
+    Count(memes);
   } catch (error) {
     loadingText.style.display = "none";
     memesGrid.innerHTML = `<p class = "empty-text">❌ Ошибка ${error.message}</p>`;
